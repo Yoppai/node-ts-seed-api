@@ -4,9 +4,6 @@ const UserScheme = new mongoose.Schema({
     name: {
         type: String
     },
-    age: {
-        type: Number
-    },
     email: {
         type: String
     },
@@ -17,6 +14,14 @@ const UserScheme = new mongoose.Schema({
     role: {
         type: String,
         default: 'user'
+    },
+    address: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address'
+    },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company'
     }
 },
     {

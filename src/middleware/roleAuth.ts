@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
-const { verifyToken } = require('../helpers/generateToken')
-const userModel = require('../models/users')
+import { verifyToken } from '../helpers/generateToken'
+import userModel from '../models/users'
 
 const checkRoleAuth = (roles: any) => async (req: Request, res: Response, next: NextFunction) => {
     try {

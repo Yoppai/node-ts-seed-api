@@ -1,27 +1,35 @@
-import { check } from 'express-validator' //TODO <---
+import { check, param } from 'express-validator' //TODO <---
 import { validateResult } from '../helpers/validateHelper'
 import { Request, Response, NextFunction } from 'express'
-const validateCreate = [ //TODO:name, age, email
+
+const validateCreateAdmin = [ //TODO:name, age, email
     check('name')
         .exists()
         .not().isEmpty(),
-    check('age')
-        .exists()
-        .isNumeric()
-        .custom((value, { req }) => {
-            //TODO: 18
-            if (value < 18 || value > 40) {
-                throw new Error('Rango de edad debe ser entre 18 y 40')
-            }
-            return true
-        })
-    ,
     check('email')
         .exists()
         .isEmail(),
+    check('password')
+        .exists()
+        .not().isEmpty()
+        .isLength({ min: 8 }),
     (req: Request, res: Response, next: NextFunction) => {
         validateResult(req, res, next)
     }
 ]
 
-export{ validateCreate }
+const validateCompany = [
+    param('id')
+        .exists()
+        .not().isEmpty()
+        .isMongoId(),
+    check('company')
+        .exists()
+        .not().isEmpty()
+        .isMongoId(),
+    (req: Request, res: Response, next: NextFunction) => {
+        validateResult(req, res, next)
+    }
+]
+
+export { validateCreateAdmin, validateCompany }
